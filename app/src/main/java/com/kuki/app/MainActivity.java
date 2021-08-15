@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.kuki.base.autoservice.KukiServiceLoader;
+import com.kuki.common.autoservice.IWebViewService;
 import com.kuki.webview.WebViewActivity;
+
+import java.util.ServiceLoader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +22,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+//                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+
+                //使用AutoService 实现页面跳转
+                IWebViewService webViewService = KukiServiceLoader.load(IWebViewService.class);
+                webViewService.startWebActivity(MainActivity.this, "https://www.baidu.com", "百度", false);
             }
         });
     }

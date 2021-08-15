@@ -1,3 +1,5 @@
 include ':webview'
 include ':app'
 rootProject.name = "WebViewPlugin"
+include ':common'
+include ':base'
