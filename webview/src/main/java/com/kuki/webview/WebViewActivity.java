@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.kuki.webview.databinding.ActivityWebviewBinding;
 import com.kuki.webview.utils.Constants;
@@ -24,16 +25,19 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_webview);
-        mBinding.webview.getSettings().setJavaScriptEnabled(true);
-        mBinding.webview.loadUrl(getIntent().getStringExtra(Constants.URL));
-
-        mBinding.actionBar.setVisibility(getIntent().getBooleanExtra(Constants.IS_SHOW_ACTION_BAR, true)? View.VISIBLE:View.GONE);
+        mBinding.actionBar.setVisibility(getIntent().getBooleanExtra(Constants.IS_SHOW_ACTION_BAR, true) ? View.VISIBLE : View.GONE);
         mBinding.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WebViewActivity.this.finish();
             }
         });
+
+        WebViewFragment webViewFragment = WebViewFragment.newInstance(getIntent().getStringExtra(Constants.URL));
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.web_view_fragment, webViewFragment);
+        transaction.commit();
 
     }
 }
