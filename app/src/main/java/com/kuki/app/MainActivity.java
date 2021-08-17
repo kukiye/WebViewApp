@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //使用AutoService 实现页面跳转
                 IWebViewService webViewService = KukiServiceLoader.load(IWebViewService.class);
-                webViewService.startWebActivity(MainActivity.this, "https://www.baidu.com", "百度", false);
+                webViewService.startWebActivity(MainActivity.this, "https://www.baidu.com", "百度", true);
             }
         });
     }

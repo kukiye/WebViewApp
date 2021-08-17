@@ -33,11 +33,15 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
 
-        WebViewFragment webViewFragment = WebViewFragment.newInstance(getIntent().getStringExtra(Constants.URL));
+        WebViewFragment webViewFragment = WebViewFragment.newInstance(getIntent().getStringExtra(Constants.URL),true);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.web_view_fragment, webViewFragment);
         transaction.commit();
 
+    }
+
+    public void updateTitle(String title) {
+        mBinding.title.setText(title);
     }
 }
