@@ -28,4 +28,13 @@ public class WebViewService implements IWebViewService {
         WebViewFragment webViewFragment = WebViewFragment.newInstance(url, canNativeRefresh);
         return webViewFragment;
     }
+
+    @Override
+    public void startDemoHtml(Context context) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(Constants.URL, Constants.ANDROID_ASSET_URI + "demo.html");
+        intent.putExtra(Constants.TITLE, "本地Demo测试页");
+        intent.putExtra(Constants.IS_SHOW_ACTION_BAR, true);
+        context.startActivity(intent);
+    }
 }

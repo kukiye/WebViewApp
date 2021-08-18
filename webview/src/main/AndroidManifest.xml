@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kuki.webview">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <!--android:usesCleartextTraffic="true"允许使用HTTP-->
-    <application
-        android:usesCleartextTraffic="true">
+    <!--    android:process=":kukiwebview" 开启WebView进程为了提高稳定性，WebView出错不影响主进程-->
+
+    <application android:usesCleartextTraffic="true">
         <activity
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".WebViewActivity"></activity>
+            android:name=".WebViewActivity"
+            android:process=":kukiwebview"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

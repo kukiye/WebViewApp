@@ -10,4 +10,6 @@ public class Constants {
 
     public static final String CAN_NATIVE_REFRESH="canNativeRefresh";
 
+    public static final String ANDROID_ASSET_URI = "file:///android_asset/";
+
 }

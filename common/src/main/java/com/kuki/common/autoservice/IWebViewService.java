@@ -11,4 +11,6 @@ public interface IWebViewService {
 
     Fragment getWebViewFragment(String url, boolean canNativeRefresh);
 
+    void startDemoHtml(Context context);
+
 }

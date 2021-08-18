@@ -1,4 +1,4 @@
-package com.kuki.webview.webviewclient;
+package com.kuki.webview.webviewprocess.webviewclient;
 
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -12,7 +12,7 @@ import com.kuki.webview.callback.WebViewCallback;
 /**
  * author ：yeton
  * date : 2021/8/17 16:01
- * package：com.kuki.webview.webviewclient
+ * package：com.kuki.webview.webviewprocess.webviewclient
  * description :
  */
 public class KukiWebViewClient extends WebViewClient {

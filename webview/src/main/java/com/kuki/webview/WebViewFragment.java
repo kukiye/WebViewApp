@@ -21,8 +21,8 @@ import com.kuki.base.loadsir.LoadingCallback;
 import com.kuki.webview.callback.WebViewCallback;
 import com.kuki.webview.databinding.FragmentWebviewBinding;
 import com.kuki.webview.utils.Constants;
-import com.kuki.webview.webchromeclient.KukiWebChromeClient;
-import com.kuki.webview.webviewclient.KukiWebViewClient;
+import com.kuki.webview.webviewprocess.webchromeclient.KukiWebChromeClient;
+import com.kuki.webview.webviewprocess.webviewclient.KukiWebViewClient;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -67,9 +67,7 @@ public class WebViewFragment extends Fragment implements WebViewCallback, OnRefr
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_webview, container, false);
 
-        mBinding.webview.getSettings().setJavaScriptEnabled(true);
-        mBinding.webview.setWebViewClient(new KukiWebViewClient(this));
-        mBinding.webview.setWebChromeClient(new KukiWebChromeClient(this));
+        mBinding.webview.registerWebViewCallBack(this);
         mBinding.webview.loadUrl(mUrl);
 
 

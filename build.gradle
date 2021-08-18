@@ -27,7 +27,7 @@ ext {
     compileSdkVersion = 30
     buildToolsVersion = "30.0.3"
 
-    minSdkVersion = 19
+    minSdkVersion = 21
     targetSdkVersion = 30
 
     androidXVersion = '1.2.0'
