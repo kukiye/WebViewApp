@@ -6,8 +6,11 @@ import android.content.Intent;
 import com.google.gson.Gson;
 import com.kuki.base.BaseApplication;
 import com.kuki.webview.IWebViewProcessToMainProcess;
+import com.kuki.webview.command.Command;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 /**
  * author ：yeton
@@ -17,7 +20,16 @@ import java.util.Map;
  */
 public class MainProcessCommandsManager extends IWebViewProcessToMainProcess.Stub {
 
+    private HashMap<String, Command> commandHashMap = new HashMap<>();
+
     private MainProcessCommandsManager() {
+        //通过Command接口找到所有的子类，并且创建所有子类实例
+        ServiceLoader<Command> commandServiceLoader = ServiceLoader.load(Command.class);
+        for (Command command : commandServiceLoader) {
+            if (!commandHashMap.containsKey(command.getName())) {
+                commandHashMap.put(command.getName(), command);
+            }
+        }
     }
 
     private static class MainProcessCommandsHolder {
@@ -31,13 +43,20 @@ public class MainProcessCommandsManager extends IWebViewProcessToMainProcess.Stu
     @Override
     public void handleWebCommand(String commandName, String jsonParams) {
 
-        Map<String, String> paramMap = new Gson().fromJson(jsonParams, Map.class);
+        //第一种直接调用
+        //        excuteCommand(commandName, );
+
+        //第二种使用接口注册的方式实现
+        commandHashMap.get(commandName).excute(new Gson().fromJson(jsonParams, Map.class));
+
+    }
+
+    private void excuteCommand(String commandName, Map<String, String> paramMap) {
         if ("openPage".equalsIgnoreCase(commandName)) {
             Intent intent = new Intent();
             intent.setComponent(new ComponentName(BaseApplication.sApplication, paramMap.get("target_class")));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             BaseApplication.sApplication.startActivity(intent);
         }
-
     }
 }

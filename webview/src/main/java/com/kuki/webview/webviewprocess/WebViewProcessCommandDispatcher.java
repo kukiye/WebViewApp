@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.kuki.base.BaseApplication;
 import com.kuki.webview.IWebViewProcessToMainProcess;
+import com.kuki.webview.mainprocess.MainProcessCommandsManager;
 import com.kuki.webview.mainprocess.MainProcessService;
 
 import java.util.Map;
@@ -69,27 +70,30 @@ public class WebViewProcessCommandDispatcher implements ServiceConnection {
 
     public void excuteCommand(String commandName, String jsonParam, Context context) {
 
-        Map<String, String> paramMap = new Gson().fromJson(jsonParam, Map.class);
-        if ("showToast".equalsIgnoreCase(commandName)) {
-            Toast.makeText(context, paramMap.get("message"), Toast.LENGTH_LONG).show();
+
+   /*     if ("showToast".equalsIgnoreCase(commandName)) {
+            // Map<String, String> paramMap = new Gson().fromJson(jsonParam, Map.class);
+            //            Toast.makeText(context, paramMap.get("message"), Toast.LENGTH_LONG).show();
+
+            //不能这样用，因为跨进程了
+            MainProcessCommandsManager.getInstance().handleWebCommand(commandName, jsonParam);
 
         } else if ("openPage".equalsIgnoreCase(commandName)) {
 
 
             //同一个App 的不同进程，这种方式在OPPO手机上可以跳转。--但不规范
             // 如果是不同的App就不行了
-            /*Intent intent = new Intent();
+            *//*Intent intent = new Intent();
             intent.setComponent(new ComponentName(context, paramMap.get("target_class")));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);*/
+            context.startActivity(intent);*//*
 
-            //通过AIDL方式实现跨进程通讯
-            try {
-                iWebViewProcessToMainProcess.handleWebCommand(commandName, jsonParam);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
+        }*/
+        //通过AIDL方式实现跨进程通讯
+        try {
+            iWebViewProcessToMainProcess.handleWebCommand(commandName, jsonParam);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
