@@ -1,6 +1,8 @@
 package com.kuki.webview.webviewprocess;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.kuki.base.BaseApplication;
 import com.kuki.webview.bean.JsParam;
 import com.kuki.webview.callback.WebViewCallback;
 import com.kuki.webview.webviewprocess.webchromeclient.KukiWebChromeClient;
@@ -50,6 +53,8 @@ public class BaseWebView extends WebView {
     }
 
     private void init() {
+        WebViewProcessCommandDispatcher.getInstance().initAidlConnection();
+
         WebViewSettings.getInstance().setSettings(this);
         addJavascriptInterface(this, "kukiwebview");
 
@@ -65,17 +70,10 @@ public class BaseWebView extends WebView {
         Log.d(TAG, jsString);
 
         if (!TextUtils.isEmpty(jsString)) {
-
-            JsParam jsParam = new Gson().fromJson(jsString, JsParam.class);
-            if (jsParam != null) {
-                if ("showToast".equalsIgnoreCase(jsParam.getName())) {
-                    Map<String, String> paramMap = new Gson().fromJson(jsParam.getParam(), Map.class);
-                    Toast.makeText(getContext(), paramMap.get("message"), Toast.LENGTH_LONG).show();
-
-                }
+            JsParam jsParamObject = new Gson().fromJson(jsString, JsParam.class);
+            if (jsParamObject != null) {
+                WebViewProcessCommandDispatcher.getInstance().excuteCommand(jsParamObject.getName(), new Gson().toJson(jsParamObject.getParam()), getContext());
             }
-
-
         }
 
     }

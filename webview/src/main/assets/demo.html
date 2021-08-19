@@ -17,18 +17,26 @@
          }
 
 
+
+
     </style>
     <script>
         function callAppToast(){
             console.log("callAppToast.");
             xiangxuejs.takeNativeAction("showToast", {message: "this is a message from html."});
         }
+        function openActivityA(){
+            console.log("openActivityA.");
+            xiangxuejs.takeNativeAction("openPage", {target_class: "com.kuki.app.MainProcessTestActivity"});
+        }
+
+
 
     </script>
     <script src="js/xiangxuejs.js" charset="utf-8"></script>
 </head>
 <body style="height: 100%;">
-<div class="item" style="font-size: 20px; color: #ffffff" onclick="callAppToast()">调用: showToast
-</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="callAppToast()">调用: showToast</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityA()">打开MainProcessTestActivity</div>
 </body>
 </html>

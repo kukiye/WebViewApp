@@ -13,6 +13,8 @@
             android:name=".WebViewActivity"
             android:process=":kukiwebview"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+        <service android:name=".mainprocess.MainProcessService"></service>
     </application>
 
 </manifest>
