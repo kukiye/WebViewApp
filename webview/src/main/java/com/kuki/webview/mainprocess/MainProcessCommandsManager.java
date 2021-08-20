@@ -7,6 +7,7 @@ import android.os.RemoteException;
 import com.google.gson.Gson;
 import com.kuki.base.BaseApplication;
 import com.kuki.webview.ICallbackFromMainProcessToWebViewProcessAidlInterface;
+import com.kuki.webview.IWebViewProcessToMainProcessAidlInterface;
 import com.kuki.webview.command.Command;
 
 import java.util.HashMap;
@@ -41,8 +42,8 @@ public class MainProcessCommandsManager extends IWebViewProcessToMainProcessAidl
         return MainProcessCommandsHolder.sInstance;
     }
 
-    /*@Override
-    public void handleWebCommand(String commandName, String jsonParams, ICallbackFromMainProcessToWebViewProcessAidlInterface.Stub callback) {
+     @Override
+    public void handleWebCommand(String commandName, String jsonParams, ICallbackFromMainProcessToWebViewProcessAidlInterface callback) throws RemoteException {
 
         //第一种直接调用
         //        excuteCommand(commandName, );
@@ -50,7 +51,7 @@ public class MainProcessCommandsManager extends IWebViewProcessToMainProcessAidl
         //第二种使用接口注册的方式实现
         commandHashMap.get(commandName).excute(new Gson().fromJson(jsonParams, Map.class), callback);
 
-    }*/
+    }
 
     private void excuteCommand(String commandName, Map<String, String> paramMap) {
         if ("openPage".equalsIgnoreCase(commandName)) {
