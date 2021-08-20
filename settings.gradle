@@ -1,3 +1,4 @@
+include ':usercenter'
 include ':webview'
 include ':app'
 rootProject.name = "WebViewPlugin"

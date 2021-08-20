@@ -1,15 +1,14 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
 }
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.kuki.webviewplugin"
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdkVersion 19
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
@@ -26,18 +25,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dataBinding{
-        enabled true
-    }
 }
 
 dependencies {
 
     implementation "androidx.appcompat:appcompat:$rootProject.androidXVersion"
     implementation "com.google.android.material:material:$rootProject.meterialVersion"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
     annotationProcessor rootProject.googleAutoServiceDependency
-    implementation project(":webview")
-    implementation project(":usercenter")
+//    api相当于Java的public  implementation相当于Java的private
+    api project(":common")
 
 }
