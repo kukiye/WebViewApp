@@ -15,10 +15,6 @@
          background-color: #999999;
          margin-top: 20px;
          }
-
-
-
-
     </style>
     <script>
         function callAppToast(){
@@ -29,8 +25,10 @@
             console.log("openActivityA.");
             xiangxuejs.takeNativeAction("openPage", {target_class: "com.kuki.app.MainProcessTestActivity"});
         }
-
-
+        function openActivityB(){
+            console.log("openActivityB.");
+            xiangxuejs.takeNativeAction("openPage", {target_class: "com.kuki.app.MainProcessTestActivityB"});
+        }
 
     </script>
     <script src="js/xiangxuejs.js" charset="utf-8"></script>
@@ -38,5 +36,6 @@
 <body style="height: 100%;">
 <div class="item" style="font-size: 20px; color: #ffffff" onclick="callAppToast()">调用: showToast</div>
 <div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityA()">打开MainProcessTestActivity</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityB()">打开另外一个主进程的activity</div>
 </body>
 </html>

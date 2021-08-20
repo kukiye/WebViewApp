@@ -19,6 +19,7 @@
         </activity>
 
         <activity android:name=".MainProcessTestActivity"></activity>
+        <activity android:name=".MainProcessTestActivityB" />
     </application>
 
 </manifest>

@@ -32,9 +32,8 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$rootProject.androidXVersion"
     implementation "com.google.android.material:material:$rootProject.meterialVersion"
-    annotationProcessor rootProject.googleAutoServiceDependency
-    implementation rootProject.googleAutoServiceDependency
 
+    annotationProcessor rootProject.googleAutoServiceDependency
 //    api相当于Java的public  implementation相当于Java的private
     api project(":common")
 }

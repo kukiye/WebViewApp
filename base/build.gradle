@@ -40,4 +40,7 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7'
 
     api 'com.google.code.gson:gson:2.8.2'
+
+
+    api rootProject.googleAutoServiceDependency
 }

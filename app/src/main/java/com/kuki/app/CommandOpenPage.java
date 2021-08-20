@@ -1,4 +1,4 @@
-package com.kuki.webview.command;
+package com.kuki.app;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.auto.service.AutoService;
 import com.kuki.base.BaseApplication;
+import com.kuki.webview.command.Command;
 
 import java.util.Map;
 

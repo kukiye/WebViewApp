@@ -1,10 +1,13 @@
-package com.kuki.webview.command;
+package com.kuki.app;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.auto.service.AutoService;
 import com.kuki.base.BaseApplication;
+import com.kuki.webview.command.Command;
 
 import java.util.Map;
 
@@ -25,6 +28,13 @@ public class CommandShowToast implements Command {
     public void excute(Map params) {
 
         Log.d("CommandShowToast", String.valueOf(params.get("message")));
-        Toast.makeText(BaseApplication.sApplication, String.valueOf(params.get("message")), Toast.LENGTH_LONG).show();
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BaseApplication.sApplication, String.valueOf(params.get("message")), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }
