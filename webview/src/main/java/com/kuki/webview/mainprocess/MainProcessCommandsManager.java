@@ -2,10 +2,11 @@ package com.kuki.webview.mainprocess;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.RemoteException;
 
 import com.google.gson.Gson;
 import com.kuki.base.BaseApplication;
-import com.kuki.webview.IWebViewProcessToMainProcess;
+import com.kuki.webview.ICallbackFromMainProcessToWebViewProcessAidlInterface;
 import com.kuki.webview.command.Command;
 
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.ServiceLoader;
  * package：com.kuki.webview.mainprocess
  * description :实现AIDL接口，接收WebViewProcess传过来的命令
  */
-public class MainProcessCommandsManager extends IWebViewProcessToMainProcess.Stub {
+public class MainProcessCommandsManager extends IWebViewProcessToMainProcessAidlInterface.Stub {
 
     private HashMap<String, Command> commandHashMap = new HashMap<>();
 
@@ -40,16 +41,16 @@ public class MainProcessCommandsManager extends IWebViewProcessToMainProcess.Stu
         return MainProcessCommandsHolder.sInstance;
     }
 
-    @Override
-    public void handleWebCommand(String commandName, String jsonParams) {
+    /*@Override
+    public void handleWebCommand(String commandName, String jsonParams, ICallbackFromMainProcessToWebViewProcessAidlInterface.Stub callback) {
 
         //第一种直接调用
         //        excuteCommand(commandName, );
 
         //第二种使用接口注册的方式实现
-        commandHashMap.get(commandName).excute(new Gson().fromJson(jsonParams, Map.class));
+        commandHashMap.get(commandName).excute(new Gson().fromJson(jsonParams, Map.class), callback);
 
-    }
+    }*/
 
     private void excuteCommand(String commandName, Map<String, String> paramMap) {
         if ("openPage".equalsIgnoreCase(commandName)) {

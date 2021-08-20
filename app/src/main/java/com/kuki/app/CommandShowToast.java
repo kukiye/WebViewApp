@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.google.auto.service.AutoService;
 import com.kuki.base.BaseApplication;
+import com.kuki.webview.ICallbackFromMainProcessToWebViewProcessAidlInterface;
 import com.kuki.webview.command.Command;
 
 import java.util.Map;
@@ -25,7 +26,7 @@ public class CommandShowToast implements Command {
     }
 
     @Override
-    public void excute(Map params) {
+    public void excute(Map params, ICallbackFromMainProcessToWebViewProcessAidlInterface callback) {
 
         Log.d("CommandShowToast", String.valueOf(params.get("message")));
         Handler handler = new Handler(Looper.getMainLooper());

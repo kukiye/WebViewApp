@@ -30,5 +30,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.androidXVersion"
     implementation "com.google.android.material:material:$rootProject.meterialVersion"
     api project(":base")
+    api 'org.greenrobot:eventbus:3.2.0'
 
 }

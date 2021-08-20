@@ -6,15 +6,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.kuki.base.BaseApplication;
-import com.kuki.webview.IWebViewProcessToMainProcess;
-import com.kuki.webview.mainprocess.MainProcessCommandsManager;
+import com.kuki.webview.ICallbackFromMainProcessToWebViewProcessAidlInterface;
+import com.kuki.webview.IWebViewProcessToMainProcessAidlInterface;
 import com.kuki.webview.mainprocess.MainProcessService;
-
-import java.util.Map;
 
 /**
  * author ：yeton
@@ -24,7 +20,7 @@ import java.util.Map;
  */
 public class WebViewProcessCommandDispatcher implements ServiceConnection {
 
-    private IWebViewProcessToMainProcess iWebViewProcessToMainProcess;
+    private IWebViewProcessToMainProcessAidlInterface iWebViewProcessToMainProcess;
 
     private WebViewProcessCommandDispatcher() {
     }
@@ -49,7 +45,7 @@ public class WebViewProcessCommandDispatcher implements ServiceConnection {
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        iWebViewProcessToMainProcess = IWebViewProcessToMainProcess.Stub.asInterface(service);
+        iWebViewProcessToMainProcess = IWebViewProcessToMainProcessAidlInterface.Stub.asInterface(service);
     }
 
     @Override
@@ -68,7 +64,7 @@ public class WebViewProcessCommandDispatcher implements ServiceConnection {
     }
 
 
-    public void excuteCommand(String commandName, String jsonParam, Context context) {
+    public void excuteCommand(String commandName, String jsonParam, BaseWebView baseWebView) {
 
 
    /*     if ("showToast".equalsIgnoreCase(commandName)) {
@@ -89,12 +85,20 @@ public class WebViewProcessCommandDispatcher implements ServiceConnection {
             context.startActivity(intent);*//*
 
         }*/
-        //通过AIDL方式实现跨进程通讯
-        try {
-            iWebViewProcessToMainProcess.handleWebCommand(commandName, jsonParam);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        //第二种：通过AIDL方式实现跨进程通讯
+        if (iWebViewProcessToMainProcess != null) {
+            try {
+                iWebViewProcessToMainProcess.handleWebCommand(commandName, jsonParam, new ICallbackFromMainProcessToWebViewProcessAidlInterface.Stub() {
+                    @Override
+                    public void onResult(String callbackname, String response) throws RemoteException {
+
+                    }
+                });
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
 }

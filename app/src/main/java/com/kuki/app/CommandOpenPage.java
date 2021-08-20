@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.auto.service.AutoService;
 import com.kuki.base.BaseApplication;
+import com.kuki.webview.ICallbackFromMainProcessToWebViewProcessAidlInterface;
 import com.kuki.webview.command.Command;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ public class CommandOpenPage implements Command {
     }
 
     @Override
-    public void excute(Map params) {
+    public void excute(Map params, ICallbackFromMainProcessToWebViewProcessAidlInterface callback) {
 
         String target_class = (String) params.get("target_class");
         if (!TextUtils.isEmpty(target_class)) {

@@ -9,6 +9,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.kuki.common.eventbus.LoginEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -53,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         // Login button Click Event
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //                EventBus.getDefault().post(new LoginEvent(inputEmail.getEditText().getText().toString()));
+                EventBus.getDefault().post(new LoginEvent(inputEmail.getEditText().getText().toString()));
                 finish();
             }
         });

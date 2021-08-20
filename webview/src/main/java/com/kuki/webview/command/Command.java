@@ -1,5 +1,7 @@
 package com.kuki.webview.command;
 
+import com.kuki.webview.ICallbackFromMainProcessToWebViewProcessAidlInterface;
+
 import java.util.Map;
 
 /**
@@ -12,6 +14,6 @@ public interface Command {
 
     String getName();
 
-    void excute(Map params);
+    void excute(Map params, ICallbackFromMainProcessToWebViewProcessAidlInterface callback);
 
 }

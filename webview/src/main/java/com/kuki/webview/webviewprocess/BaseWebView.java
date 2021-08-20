@@ -72,7 +72,7 @@ public class BaseWebView extends WebView {
         if (!TextUtils.isEmpty(jsString)) {
             JsParam jsParamObject = new Gson().fromJson(jsString, JsParam.class);
             if (jsParamObject != null) {
-                WebViewProcessCommandDispatcher.getInstance().excuteCommand(jsParamObject.getName(), new Gson().toJson(jsParamObject.getParam()), getContext());
+                WebViewProcessCommandDispatcher.getInstance().excuteCommand(jsParamObject.getName(), new Gson().toJson(jsParamObject.getParam()), this);
             }
         }
 
