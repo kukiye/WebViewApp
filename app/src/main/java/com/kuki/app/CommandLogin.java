@@ -1,25 +1,20 @@
 package com.kuki.app;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.RemoteException;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.auto.service.AutoService;
 import com.google.gson.Gson;
-import com.kuki.base.BaseApplication;
+import com.kuki.base.autoservice.KukiServiceLoader;
+import com.kuki.common.autoservice.IUserCenterService;
 import com.kuki.common.eventbus.LoginEvent;
 import com.kuki.webview.ICallbackFromMainProcessToWebViewProcessAidlInterface;
 import com.kuki.webview.command.Command;
-import com.kuki.webview.webviewprocess.WebViewProcessCommandDispatcher;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +25,7 @@ import java.util.Map;
  */
 @AutoService(Command.class)
 public class CommandLogin implements Command {
-
+    IUserCenterService iUserCenterService = KukiServiceLoader.load(IUserCenterService.class);
     private String callbacknameFromNativeJs;
     private ICallbackFromMainProcessToWebViewProcessAidlInterface callback;
 
@@ -49,12 +44,18 @@ public class CommandLogin implements Command {
         Log.d("CommandLogin", new Gson().toJson(parameters));
 
         //1、去登录
-        String target_class = (String) parameters.get("target_class");
+    /*    String target_class = (String) parameters.get("target_class");
         if (!TextUtils.isEmpty(target_class)) {
             Intent intent = new Intent();
             intent.setComponent(new ComponentName(BaseApplication.sApplication, target_class));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             BaseApplication.sApplication.startActivity(intent);
+        }*/
+
+        if (iUserCenterService != null && !iUserCenterService.isLogined()) {
+            iUserCenterService.login();
+            this.callback = callback;
+            this.callbacknameFromNativeJs = parameters.get("callbackname").toString();
         }
 
         this.callback = callback;
@@ -76,9 +77,12 @@ public class CommandLogin implements Command {
 
         //在执行命令的时候传一个接口过来
         //这里是主进程需要给WebView的进程发送数据，所以需要用AIDL
+
+        HashMap map = new HashMap();
+        map.put("accountName", loginEvent.userName);
         if (callback != null) {
             try {
-                callback.onResult(callbacknameFromNativeJs, loginEvent.userName);
+                callback.onResult(callbacknameFromNativeJs, new Gson().toJson(map));
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

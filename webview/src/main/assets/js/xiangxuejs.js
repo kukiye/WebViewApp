@@ -2,22 +2,18 @@ var xiangxuejs = {};
 xiangxuejs.os = {};
 xiangxuejs.os.isIOS = /iOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
 xiangxuejs.os.isAndroid = !xiangxuejs.os.isIOS;
-xiangxuejs.callbacks={}
+xiangxuejs.callbacks = {}
 
-//接收WebView的结果
 xiangxuejs.callback = function (callbackname, response) {
-    //根据回调名称找到对应的回调
    var callbackobject = xiangxuejs.callbacks[callbackname];
    console.log("xxxx"+callbackname);
    if (callbackobject !== undefined){
        if(callbackobject.callback != undefined){
           console.log("xxxxxx"+response);
-          //回调把结果返回出去
-            var ret = callbackobject.callback(response);
+           var ret = callbackobject.callback(response);
            if(ret === false){
                return
            }
-           //删除回调
            delete xiangxuejs.callbacks[callbackname];
        }
    }

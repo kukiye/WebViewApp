@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 import com.kuki.base.BaseApplication;
 import com.kuki.webview.ICallbackFromMainProcessToWebViewProcessAidlInterface;
@@ -19,6 +20,8 @@ import com.kuki.webview.mainprocess.MainProcessService;
  * description :网页命令的分发器
  */
 public class WebViewProcessCommandDispatcher implements ServiceConnection {
+
+    public static final String TAG = "WebCommandDispatcher";
 
     private IWebViewProcessToMainProcessAidlInterface iWebViewProcessToMainProcess;
 
@@ -91,6 +94,12 @@ public class WebViewProcessCommandDispatcher implements ServiceConnection {
                 iWebViewProcessToMainProcess.handleWebCommand(commandName, jsonParam, new ICallbackFromMainProcessToWebViewProcessAidlInterface.Stub() {
                     @Override
                     public void onResult(String callbackname, String response) throws RemoteException {
+                        Log.d(TAG,"callbackname:"+callbackname+"--response:"+response);
+
+                        //todo 通过WebView发送数据给网页JS
+
+                        baseWebView.postJsData(callbackname,response);
+
 
                     }
                 });

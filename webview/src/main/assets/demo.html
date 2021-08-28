@@ -37,10 +37,8 @@
         function loginAndCallback(){
             console.log("loginAndCallback.");
             xiangxuejs.takeNativeActionWithCallback("login", {target_class: "com.kuki.usercenter.LoginActivity"}, function(res){
-
                 var element=document.createElement("div");
                 element.appendChild(document.createTextNode("userName:"+res.accountName));
-
                 <!--在login_id div下面增加节点-->
                 document.getElementById("login_id").appendChild(element)
             });
@@ -54,6 +52,6 @@
 <div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityA()">打开MainProcessTestActivity</div>
 <div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityB()">打开另外一个主进程的activity</div>
 <div class="item" style="font-size: 20px; color: #ffffff" onclick="openLoginActivity()">打开LoginActivity</div>
-<div id="login_id" class="item" style="font-size: 20px; color: #ffffff" onclick="loginAndCallback()">打开LoginActivity并且回传登录的数据</div>
+<div id="login_id" class="item" style="font-size: 20px; color: #ffffff" onclick="loginAndCallback()">登录并且返回结果</div>
 </body>
 </html>

@@ -1,27 +1,21 @@
 package com.kuki.webview.webviewprocess;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.kuki.base.BaseApplication;
 import com.kuki.webview.bean.JsParam;
 import com.kuki.webview.callback.WebViewCallback;
 import com.kuki.webview.webviewprocess.webchromeclient.KukiWebChromeClient;
 import com.kuki.webview.webviewprocess.websettings.WebViewSettings;
 import com.kuki.webview.webviewprocess.webviewclient.KukiWebViewClient;
 
-import java.util.Map;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * author ：yeton
@@ -78,4 +72,17 @@ public class BaseWebView extends WebView {
 
     }
 
+    public void postJsData(String callbackname, String response) {
+
+        if (!TextUtils.isEmpty(callbackname) && !TextUtils.isEmpty(response)) {
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    String jscode = "javascript:xiangxuejs.callback('" + callbackname + "'," + response + ")";
+                    Log.e("xxxxxx", jscode);
+                    evaluateJavascript(jscode, null);
+                }
+            });
+        }
+    }
 }
